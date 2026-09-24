@@ -26,6 +26,26 @@ Trend Check  notebook performs automated data reconciliation and validation betw
   * Prior: `glbl_cpw_prod.history_conformed.retailindextotal_Jun26`
 * **Logic:** Computes market segment aggregates (`Jul26_SegmentAggregates`), compares with per-database totals, and checks for discrepancy between conformed and derived outputs.
 
+## 📊 Summary of Segment & Metric Definitions
+
+| Column Name | Description |
+| :--- | :--- |
+| `Global_Market` / `Market` | Country market domain (e.g., Australia, Germany, Switzerland, UK). |
+| `Global_OGF_Segment` | Global OGF category segment (e.g., Childhood Fun, Everyday Wellness, Naturally Delicious, Simple Goodness, Tasty Favourites). |
+| `Global_Manufacturer` | Product manufacturer (e.g., Nestle, Kelloggs, Private Label). |
+| `Sum_of_Value_000_CHF_Jul26` | Total sales value in thousand CHF for July 2026 MAT window. |
+| `Sum_of_Volume_000_Jul26` | Total sales volume in thousand units for July 2026 MAT window. |
+| `Value/Volume difference` | Release-over-release share delta: $\text{Share}_{\text{Jul26}} - \text{Share}_{\text{Jun26}}$. |
+
+## 🛠️ Usage & Execution
+
+1. Open the notebook in a Databricks workspace attached to a cluster with SQL warehouse or PySpark runtime access.
+2. Ensure read permissions on catalogs/schemas:
+   * `glbl_cpw_prod.conformed.*`
+   * `glbl_cpw_prod.derived.*`
+   * `glbl_cpw_prod.history_conformed.*`
+   * `metadata.forex`
+3. Execute the cells sequentially to validate that month-over-month shifts remain within expected operational tolerance limits ($\pm 0.5\%$ typical baseline, with flagged anomalies reviewed individually).
 ### 3. Manufacturer Check — Conformed & Derived Layers
 * **Objective:** Tracks manufacturer market share shifts (e.g., `KELLOGGS`, `NESTLE`, `PRIVATE LABEL`, `SANITARIUM`, `WEETABIX`) within each market between releases.
 * **Key Metrics:**
